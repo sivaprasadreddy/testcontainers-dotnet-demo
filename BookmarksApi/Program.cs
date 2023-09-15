@@ -1,11 +1,13 @@
-using BookmarksApi;
+using BookmarksApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
-builder.Services.AddScoped((prov) => new DbConnectionProvider(connectionString));
-builder.Services.AddScoped<BookmarkService, BookmarkService>();
+var configuration = builder.Configuration;
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,3 +30,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
