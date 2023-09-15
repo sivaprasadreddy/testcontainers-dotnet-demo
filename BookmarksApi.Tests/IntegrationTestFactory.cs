@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -24,7 +25,14 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
         //Console.WriteLine("TC ConnectionString="+connString);
         builder.ConfigureTestServices(services =>
         {
-            services.Remove(services.SingleOrDefault(service => typeof(DbContextOptions<TDbContext>) == service.ServiceType));
+            var dbContextDescriptor = services.SingleOrDefault(service => typeof(DbContextOptions<TDbContext>) == service.ServiceType);
+            if(dbContextDescriptor != null) {
+                services.Remove(dbContextDescriptor);
+            }
+            var dbConnectionDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbConnection));
+            if(dbConnectionDescriptor != null) {
+                services.Remove(dbConnectionDescriptor);
+            }
             services.AddDbContext<TDbContext>(options => { options.UseNpgsql(connString); });
         });
     }
