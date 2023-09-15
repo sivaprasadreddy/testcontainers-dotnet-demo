@@ -20,9 +20,12 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        var connString = _postgres.GetConnectionString();
+        Console.WriteLine("TC ConnectionString="+connString);
+        
         builder.ConfigureTestServices(services =>
         {
-           services.AddDbContext<TDbContext>(options => { options.UseNpgsql(_postgres.GetConnectionString()); });
+           services.AddDbContext<TDbContext>(options => { options.UseNpgsql(connString); });
         });
     }
 
