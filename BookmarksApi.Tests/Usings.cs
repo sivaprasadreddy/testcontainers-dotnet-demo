@@ -1,1 +1,14 @@
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Net;
+global using System.Text.Json;
+global using BookmarksApi.Controllers;
+global using BookmarksApi.Data;
+global using BookmarksApi.Models;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Threading.Tasks;
+global using Testcontainers.PostgreSql;
 global using Xunit;

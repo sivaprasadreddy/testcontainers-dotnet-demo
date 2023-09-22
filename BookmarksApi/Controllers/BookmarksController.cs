@@ -1,8 +1,3 @@
-using BookmarksApi.Data;
-using BookmarksApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 namespace BookmarksApi.Controllers;
 
 [ApiController]
